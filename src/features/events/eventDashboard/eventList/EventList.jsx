@@ -2,10 +2,10 @@ import React from "react";
 import EventListItem from "../eventListItem/EventListItem";
 
 
-const EventList = ({events})=>{
+const EventList = ({events , selectEvent  , deleteEvent})=>{
     return (
         <>
-        { events.map(event=><EventListItem event={event} key={event.id} />) }
+        { events.map(event=><EventListItem deleteEvent={deleteEvent}  selectEvent={selectEvent} event={event} key={event.id} />) }
         </>
     )
 }
