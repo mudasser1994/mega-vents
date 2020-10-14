@@ -3,13 +3,20 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
 import App from './app/layout/App';
 import * as serviceWorker from './serviceWorker';
+import {Provider} from "react-redux";
+import configureStore from './app/store/configureStore';
+import ScrollToTop from "./app/layout/ScrollToTop";
 
 const elRoot  =  document.getElementById('root');
 
 function render(){
-  ReactDOM.render(<BrowserRouter>
+  ReactDOM.render(
+  <Provider store={configureStore()}>
+  <BrowserRouter>
+     <ScrollToTop />
      <App />
-  </BrowserRouter> , elRoot);
+  </BrowserRouter>
+  </Provider> , elRoot);
 }
 
 if(module.hot){

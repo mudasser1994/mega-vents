@@ -1,9 +1,16 @@
 
+
+
 import React, { useState } from "react";
 import { Segment, Header, Form, Button } from "semantic-ui-react";
 import cuid from "cuid";
+import { useSelector, useDispatch } from "react-redux";
+import {addEvent as  createEvent   , updateEvent} from "../eventActions";
 
-const EventForm = ({setFormOpen  ,  createEvent , updateEvent, selectedEvent})=>{
+const EventForm = ({match , history})=>{
+
+    const dispatch = useDispatch();
+    const selectedEvent =  useSelector(state => state.event.events.find(ev=>ev.id===match.params.id));
     const initialValues = selectedEvent ? selectedEvent : {
         title:'',
         category:'',
@@ -15,15 +22,13 @@ const EventForm = ({setFormOpen  ,  createEvent , updateEvent, selectedEvent})=>
     const [values , setValues] = useState(initialValues);
     
     const handleFormSubmit = ()=>{
-        console.log(values);
         if(selectedEvent){
-            updateEvent({...selectedEvent ,  ...values});
+            dispatch(updateEvent({...selectedEvent ,  ...values}));
         }
         else {
-            createEvent({...values , id:cuid() , hostedBy:"Bob" , attendees:[] ,  hostPhotoURL: '/assets/user.png',});
+             dispatch(createEvent({...values , id:cuid() , hostedBy:"Bob" , attendees:[] ,  hostPhotoURL: '/assets/user.png',}));
         }
-        setFormOpen(false);
-        
+        history.push("/events");
         
     }
 
@@ -59,7 +64,7 @@ const EventForm = ({setFormOpen  ,  createEvent , updateEvent, selectedEvent})=>
                 <input type="date" name="date" value={values.date} onChange={handleInputChange} placeholder="Date"/>
             </Form.Field>
             <Button type="submit" floated="right" positive content="Submit" />
-            <Button onClick={()=>setFormOpen(false)} type="submit" floated="right"  content="Cancel" />
+            <Button onClick={()=>{}} type="submit" floated="right"  content="Cancel" />
         </Form>
 
     </Segment>

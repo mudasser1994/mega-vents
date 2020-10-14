@@ -5,14 +5,14 @@ import './styles.css';
 import EventDashboard from '../../features/events/eventDashboard/EventDashboard';
 import { Container } from 'semantic-ui-react';
 import NavBar from '../../features/nav/NavBar';
-import { Route , Switch } from "react-router-dom";
+import { Route , Switch , useLocation } from "react-router-dom";
 import HomePage from '../../features/Home/HomePage';
 import EventDetailedPage from '../../features/events/EventDetailed/EventDetailedPage';
 import EventForm from '../../features/events/eventForm/eventForm';
 
 
 const App = ()=>{
-
+  const {key} = useLocation();
   return (
     <div className="App">
     
@@ -25,7 +25,7 @@ const App = ()=>{
         <Switch>
             <Route exact path="/events"  component={EventDashboard} />
             <Route path="/events/:id"  component={EventDetailedPage} />
-            <Route path={["/createEvent" , "/manage/:id"]}  component={EventForm} />
+            <Route key={key} path={["/createEvent" , "/manage/:id"]} exact  component={EventForm} />
         </Switch>
       </Container>
       </>
