@@ -9,13 +9,15 @@ import { Route , Switch , useLocation } from "react-router-dom";
 import HomePage from '../../features/Home/HomePage';
 import EventDetailedPage from '../../features/events/EventDetailed/EventDetailedPage';
 import EventForm from '../../features/events/eventForm/eventForm';
+import ModalManager from '../common/modals/modalManager';
+import LoginForm from '../../features/auth/LoginForm';
 
 
 const App = ()=>{
   const {key} = useLocation();
   return (
     <div className="App">
-    
+    <ModalManager />
     <Switch>
       <Route path="/" exact component={HomePage} />
       <Route path="/(.+)" render={()=>(
