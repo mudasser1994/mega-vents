@@ -27,8 +27,7 @@ export default function modalReducer(state = initialState , { type , payload}){
         const {modalType , modalProps} = payload;
              return {modalType , modalProps}
 
-        case CLOSE_MODAL: 
-        console.log("updating state");
+        case CLOSE_MODAL:
               return null;
 
         default:

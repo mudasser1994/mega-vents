@@ -1,15 +1,14 @@
 import React from "react";
-import { Segment,  Item, Icon, List, Button } from "semantic-ui-react";
+import { Segment,  Item, Icon, List, Button , Label } from "semantic-ui-react";
 import EventListAttendee from "../eventListAttendee/EventListAttendee";
 import {Link} from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { deleteEvent } from "../../eventActions";
 import { format } from "date-fns";
+import { deleteEventInFirestore } from "../../../../app/firestore/firestoreService";
 
 
 const EventListItem = ({event})=>{
-    const dispatch = useDispatch();
-
+   
     return (
         <Segment.Group>
             <Segment>
@@ -20,7 +19,17 @@ const EventListItem = ({event})=>{
                             <Item.Header content={event.title} />
                             <Item.Description >
                                 Hosted By {event.hostedBy}
-                            </Item.Description> 
+                            </Item.Description>
+                            {
+                                event.isCancelled && (
+                                    <Label
+                                      style={{ top: "-40px" }}
+                                      ribbon="right"
+                                      color="red"
+                                      content="This event has been cancelled">
+                                    </Label>
+                                )
+                            } 
                         </Item.Content>
                     </Item>
 
@@ -29,7 +38,7 @@ const EventListItem = ({event})=>{
             <Segment>
                 <span>
                     <Icon name="clock"  /> {format(event.date , "MMMM d, yyyy h:mm a")}
-                    <Icon name="marker"  /> {event.venue}
+                    <Icon name="marker"  /> {event.venue.address}
                 </span>
             </Segment>
             <Segment secondary>
@@ -41,7 +50,7 @@ const EventListItem = ({event})=>{
             </Segment>
             <Segment clearing>
                 <div>{event.description}</div>
-                <Button onClick={()=>dispatch(deleteEvent(event.id)) } color="red" floated="right" content="Delete" />
+                <Button onClick={()=> deleteEventInFirestore(event.id) } color="red" floated="right" content="Delete" />
                 <Button as={Link} to={`/events/${event.id}`}  color="teal" floated="right" content="View" />
             </Segment>
       </Segment.Group>

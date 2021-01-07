@@ -1,4 +1,10 @@
 import React from 'react';
+
+
+import "semantic-ui-css/semantic.min.css";
+import "react-toastify/dist/ReactToastify.min.css";
+import "react-calendar/dist/Calendar.css";
+
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
 import App from './app/layout/App';
@@ -7,11 +13,14 @@ import {Provider} from "react-redux";
 import configureStore from './app/store/configureStore';
 import ScrollToTop from "./app/layout/ScrollToTop";
 
+
 const elRoot  =  document.getElementById('root');
+
+const store = configureStore();
 
 function render(){
   ReactDOM.render(
-  <Provider store={configureStore()}>
+  <Provider store={store}>
   <BrowserRouter>
      <ScrollToTop />
      <App />
