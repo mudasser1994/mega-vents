@@ -10,7 +10,7 @@ import "firebase/storage";
 
 
 var firebaseConfig = {
-    apiKey: "",
+    apiKey: "AIzaSyBScgdwks587-N0Dm0Fs0cx0-AC05cSofA",
     authDomain: "megavents-8ca86.firebaseapp.com",
     databaseURL: "https://megavents-8ca86.firebaseio.com",
     projectId: "megavents-8ca86",

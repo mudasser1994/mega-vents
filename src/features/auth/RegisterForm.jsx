@@ -1,7 +1,3 @@
-
-
-
-
 import React from 'react'
 import ModalWrapper from '../../app/common/modals/ModalWrapper';
 import { Formik, Form } from 'formik';
@@ -10,25 +6,27 @@ import MyTextInput from '../../app/common/form/MyTextInput';
 import {  Button, Divider, Label } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
 import { closeModal } from '../../app/common/modals/modalReducer';
-import { loginWithEmail } from '../../app/firestore/firebaseService';
+import {  registerUserInFirebase } from '../../app/firestore/firebaseService';
 import SocialLogin from './SocialLogin';
 
- const LoginForm = () => {
+ const RegisterForm = () => {
      const dispatch = useDispatch();
     return (
-        <ModalWrapper size="mini" header="Sign in to Re-vents">
+        <ModalWrapper size="mini" header="Register to Re-vents">
            {<Formik
              validationSchema={Yup.object({
+                 displayName: Yup.string().required(),
                  email: Yup.string().required().email(),
                  password: Yup.string().required()
              })}
              initialValues={{
+               displayName:"",
                email: "",
                password: ""
              }}
              onSubmit={async ( values , {setSubmitting , setErrors})=>{
                  try {
-                   await loginWithEmail(values); 
+                   await registerUserInFirebase(values); 
                    setSubmitting(false);
                    dispatch(closeModal());
                  }
@@ -42,10 +40,11 @@ import SocialLogin from './SocialLogin';
              {
                  ({isSubmitting , isValid , dirty , errors})=>(
                      <Form className="ui form">
+                         <MyTextInput name="displayName" placeholder="Display Name" />
                          <MyTextInput name="email" placeholder="Email Address" />
                          <MyTextInput name="password" type="password" placeholder="Password" />
-                         {errors.auth && <Label  basic color="red" style={{marginBottom: 10}} content={"Problem with username or password"} />}
-                         {/*errors.auth*/}
+                         {errors.auth && <Label basic color="red" style={{marginBottom: 10}}  content={"Problem with username or password"}  />}
+                         { /* auth.error */ }
                          <Divider horizontal>Or</Divider>
                          <SocialLogin />
                          <Button loading={isSubmitting}
@@ -53,7 +52,7 @@ import SocialLogin from './SocialLogin';
                                   type="submit" 
                                   fluid
                                   size="large"
-                                  content="Login"
+                                  content="Register"
                                   color="teal" />
                      </Form>
                  )
@@ -64,4 +63,4 @@ import SocialLogin from './SocialLogin';
     )
 }
 
-export default LoginForm;
+export default RegisterForm ;

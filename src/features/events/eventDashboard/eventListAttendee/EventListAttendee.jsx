@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { List, Image } from "semantic-ui-react";
 
 
 const EventListAttendee = ({attendee})=>{
     return (
         <List.Item>
-            <Image size="mini" circular src={attendee.photoURL} />
+            <Image as={Link} to={`/profile/${attendee.id}`} size="mini" circular src={attendee.photoURL} />
         </List.Item>
     )
 }

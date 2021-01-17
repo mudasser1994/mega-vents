@@ -29,3 +29,5 @@ export function useFirestoreDoc({query , data , deps , shouldExecute = true}){
         }
     } , deps)   //eslint-disable-line react-hooks/exhaustive-deps   
 }
+
+export default useFirestoreDoc;

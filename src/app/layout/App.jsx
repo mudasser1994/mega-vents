@@ -11,10 +11,19 @@ import ModalManager from '../common/modals/modalManager';
 import LoginForm from '../../features/auth/LoginForm';
 import { ToastContainer } from 'react-toastify';
 import ErrorComponent from '../common/errors/ErrorComponent';
+import AccountPage from '../../features/auth/AccountPage';
+import { useSelector } from 'react-redux';
+import LoadingComponent from './LoadingComponent';
+import ProfilePage from '../../features/profiles/ProfilePage';
 
 
 const App = ()=>{
   const {key} = useLocation();
+  const {initialized} = useSelector(state=>state.async);
+
+  if(!initialized){
+    return <LoadingComponent content="Loading App..." />
+  }
   
   return (
     <div className="App">
@@ -30,6 +39,8 @@ const App = ()=>{
             <Route exact path="/events"  component={EventDashboard} />
             <Route path="/events/:id"  component={EventDetailedPage} />
             <Route key={key} path={["/createEvent" , "/manage/:id"]} exact  component={EventForm} />
+            <Route path="/account" component={AccountPage}  />
+            <Route path="/profile/:id" component={ProfilePage}  />
             <Route path="/error" component={ErrorComponent}  />
         </Switch>
       </Container>

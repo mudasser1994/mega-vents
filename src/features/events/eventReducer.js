@@ -32,7 +32,7 @@ const eventReducer = (state = initialState , action)=>{
         case FETCH_EVENTS: 
          return {
              ...state,
-             events: action.payload
+             events: [...action.payload]
          }
 
 

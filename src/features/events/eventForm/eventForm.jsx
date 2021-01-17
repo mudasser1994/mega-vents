@@ -1,5 +1,5 @@
 /* global google */
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import {Redirect} from "react-router-dom";
 import { Segment, Header, Button , Confirm } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
@@ -23,8 +23,8 @@ const EventForm = ({match , history})=>{
     const dispatch = useDispatch();
     const [loadingCancel , setLoadingCancel ] = useState(false);
     const [confirmOpen , setConfirmOpen ] = useState(false);
-     const selectedEvent =  useSelector(state => state.event.events.find(ev=>ev.id===match.params.id));
-    const { loading , error } = useSelector(state=>state.async)
+    const selectedEvent = useSelector(state => state.event.events.find(ev=>ev.id===match.params.id));
+    const { loading , error } = useSelector(state=>state.async);
     const initialValues = selectedEvent ? selectedEvent : {
         title:'',
         category:'',
@@ -100,19 +100,16 @@ const EventForm = ({match , history})=>{
      
         <Formik initialValues={initialValues} 
                 validationSchema={validationSchema}
+                enableReinitialize 
                 onSubmit={async (values , {setSubmitting})=>{
                     setSubmitting(true);
                     try {
-                        selectedEvent ?  await updateEventInFirestore(values) : await addEventToFirestore(values)
+                        selectedEvent ? await updateEventInFirestore(values) : await addEventToFirestore(values);
                         // dispatch(createEvent({...values , id:cuid() , hostedBy:"Bob" , attendees:[] ,  hostPhotoURL: '/assets/user.png'}));
-                        console.log("before events");
-                        setSubmitting(false); 
-                        history.push("/events");
-                     
+                        history.push("/events");                   
                     }
                     catch(error){
                         toast.error(error);
-                        console.log(error);
                         setSubmitting(false);
                     }
                    

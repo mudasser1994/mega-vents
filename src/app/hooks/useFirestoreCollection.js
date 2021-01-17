@@ -22,3 +22,6 @@ export function useFirestoreCollection({query , data , deps}){
         }
     } , deps)   //eslint-disable-line react-hooks/exhaustive-deps   
 }
+
+
+export default useFirestoreCollection;

@@ -2,7 +2,6 @@ import React from "react";
 import { Segment,  Item, Icon, List, Button , Label } from "semantic-ui-react";
 import EventListAttendee from "../eventListAttendee/EventListAttendee";
 import {Link} from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { format } from "date-fns";
 import { deleteEventInFirestore } from "../../../../app/firestore/firestoreService";
 
@@ -17,8 +16,8 @@ const EventListItem = ({event})=>{
                         <Item.Image size="tiny" circular src={event.hostPhotoURL} />
                         <Item.Content>
                             <Item.Header content={event.title} />
-                            <Item.Description >
-                                Hosted By {event.hostedBy}
+                            <Item.Description  >
+                                Hosted By <Link as={Link} to={`/profile/${event.hostUid}`}>{event.hostedBy}</Link>
                             </Item.Description>
                             {
                                 event.isCancelled && (

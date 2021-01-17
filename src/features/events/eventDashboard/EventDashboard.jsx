@@ -8,18 +8,27 @@ import { listenToEventsFromFirestore  } from "../../../app/firestore/firestoreSe
 import { listenToEvents } from '../eventActions';
 import { useDispatch } from 'react-redux';
 import { useFirestoreCollection } from '../../../app/hooks/useFirestoreCollection';
+import { useState } from 'react';
 
 const EventDashboard = ()=>{
     // const [events , setEvents] = useState(sampleData);
     const {events} = useSelector(state=>state.event);
     const {loading} = useSelector(state=>state.async);
     const dispatch = useDispatch();
+    const [predicate , setPredicate] = useState(new Map([
+        ['startDate' , new Date(new Date().setHours(0,0,0,0))],
+        ['filter' , 'all']
+    ]))
 
     useFirestoreCollection({
-        query: listenToEventsFromFirestore,
+        query: ()=>listenToEventsFromFirestore(predicate),
         data: events=>dispatch(listenToEvents(events)),
-        deps: [dispatch]
+        deps: [dispatch , predicate]
     })
+
+    function handleSetPredicate(key , value){
+        setPredicate(new Map(predicate.set(key , value)));
+    }
 
     // useEffect(()=>{
     //     dispatch(asyncActionStart());
@@ -48,7 +57,7 @@ const EventDashboard = ()=>{
                 <EventList events={events}  />
             </Grid.Column>
             <Grid.Column width={6}>
-              <EventFilters />
+              <EventFilters predicate={predicate} setPredicate={handleSetPredicate} loading={loading} />
             </Grid.Column>
         </Grid>
         </React.Fragment>
