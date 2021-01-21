@@ -2,6 +2,12 @@ import { toast } from "react-toastify";
 import firebase from "../config/firebase";
 import { setUserProfileData } from "./firestoreService";
 
+export function firebaseObjectToArray(snapshot){
+    if(snapshot){
+        return Object.entries(snapshot).map((e)=>Object.assign({} , e[1] , {id:e[0]}));
+    }
+}
+
 export function loginWithEmail(creds){
     return firebase.auth().signInWithEmailAndPassword(creds.email , creds.password);
 }
@@ -61,4 +67,22 @@ export function deleteFromFirebaseStorage(fileName){
     const storageRef = firebase.storage().ref();
     const photoRef = storageRef.child(`${userUid}/user_images/${fileName}`);
     return photoRef.delete();
+}
+
+export function addEventChatComment(eventId , values){
+    const user = firebase.auth().currentUser;
+    const newComment = {
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        uid: user.uid,
+        parentId: values.parentId,
+        text: values.comment,
+        date: Date.now()
+    }
+    return firebase.database().ref(`chat/${eventId}`).push(newComment);
+}
+
+
+export function getEventChatRef(eventId){
+    return firebase.database().ref(`chat/${eventId}`).orderByKey();
 }

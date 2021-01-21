@@ -1,6 +1,6 @@
 
 import { asyncActionStart, asyncActionFinish, asyncActionError } from './../../app/async/asyncReducer';
-import { ADD_EVENT, UPDATE_EVENT, DELETE_EVENT , FETCH_EVENTS } from "./eventConstants";
+import { ADD_EVENT, UPDATE_EVENT, DELETE_EVENT , FETCH_EVENTS, LISTEN_TO_EVENT_CHAT, CLEAR_COMMENTS } from "./eventConstants";
 import { fetchSampleData } from "../../app/api/mockApi";
 
 export const loadEvents = ()=>{
@@ -44,5 +44,19 @@ export const deleteEvent = (eventId)=>{
     return {
         type: DELETE_EVENT,
         payload: eventId
+    }
+}
+
+
+export const listenToEventChats = (comments)=>{
+    return {
+        type: LISTEN_TO_EVENT_CHAT,
+        payload: comments
+    }
+}
+
+export const clearEventComments = ()=>{
+    return {
+        type: CLEAR_COMMENTS
     }
 }
