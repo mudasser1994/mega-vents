@@ -57,7 +57,7 @@ const EventDetailedChat = ({ eventId }) => {
                                     <Comment.Metadata>
                                         <div>{formatDistance(comment.date, new Date())}</div>
                                     </Comment.Metadata>
-                                    <Comment.Text>{comment.text.split("\n").map((text) => <span>{text}<br /></span>)}</Comment.Text>
+                                    <Comment.Text>{comment.text.split("\n").map((text , i) => <span key={i}>{text}<br /></span>)}</Comment.Text>
                                     <Comment.Actions>
                                         <Comment.Action onClick={() => setShowReplyForm({
                                             open: true,
