@@ -9,11 +9,13 @@ import { listenToEvents } from '../eventActions';
 import { useDispatch } from 'react-redux';
 import { useFirestoreCollection } from '../../../app/hooks/useFirestoreCollection';
 import { useState } from 'react';
+import EventFeed from './eventFeed/eventFeed';
 
 const EventDashboard = ()=>{
     // const [events , setEvents] = useState(sampleData);
     const {events} = useSelector(state=>state.event);
     const {loading} = useSelector(state=>state.async);
+    const { authenticated } = useSelector(state=>state.auth);
     const dispatch = useDispatch();
     const [predicate , setPredicate] = useState(new Map([
         ['startDate' , new Date(new Date().setHours(0,0,0,0))],
@@ -57,6 +59,7 @@ const EventDashboard = ()=>{
                 <EventList events={events}  />
             </Grid.Column>
             <Grid.Column width={6}>
+                {authenticated && <EventFeed /> }
               <EventFilters predicate={predicate} setPredicate={handleSetPredicate} loading={loading} />
             </Grid.Column>
         </Grid>
