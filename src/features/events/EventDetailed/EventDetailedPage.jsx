@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import EventDetailedHeader from './EventDetailedHeader';
 import EventDetailedInfo from './EventDetailedInfo';
 import EventDetailedChat from './EventDetailedChat';
-import { listenToEvents } from '../eventActions';
+import { listenToSelectedEvent } from '../eventActions';
 import EventDetailedSidebar from './EventDetailedSidebar';
 import { useFirestoreDoc } from '../../../app/hooks/useFirestoreDoc';
 import { listenToEventFromFirestore } from '../../../app/firestore/firestoreService';
@@ -17,7 +17,7 @@ import { useDispatch } from 'react-redux';
     const dispatch = useDispatch(); 
     const params= useParams();
 
-    const event =  useSelector(state => state.event.events.find(ev=>ev.id===params.id));
+    const event =  useSelector(state => state.event.selectedEvent);
     const { loading , error } = useSelector(state=>state.async)
     const {currentUser} = useSelector(state=>state.auth);
     const isHost = event?.hostUid === currentUser?.uid;
@@ -25,7 +25,7 @@ import { useDispatch } from 'react-redux';
 
     useFirestoreDoc({
         query: ()=>listenToEventFromFirestore(params.id),
-        data: event=> dispatch(listenToEvents([event])),
+        data: event=> dispatch(listenToSelectedEvent(event)),
         deps: [params.id , dispatch]
     })
 

@@ -17,8 +17,7 @@ export default function FollowingTab({ profile, activeTab }) {
         data: (data) => activeTab === 3
             ? dispatch(listenToFollowers(data))
             : dispatch(listenToFollowing(data)),
-        deps: [dispatch , activeTab , profile.id , profile.id]
-
+        deps: [dispatch , activeTab , profile.id]
     })
 
     return (

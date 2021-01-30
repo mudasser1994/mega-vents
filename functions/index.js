@@ -56,7 +56,6 @@ exports.eventUpdated = functions.firestore.document("events/{eventId}")
         const followersDoc = await db.collection("following").doc(attendeeJoined.id).collection("userFollowers").get();
         followersDoc.forEach(doc => {
           const post = newPost(attendeeJoined, "joined-event", context.params.eventId ,before);
-          console.log("post");
           admin.database().ref(`/posts/${doc.id}`).push(post);
         })
       }

@@ -1,12 +1,11 @@
-import { ADD_EVENT, UPDATE_EVENT, DELETE_EVENT, FETCH_EVENTS, LISTEN_TO_EVENT_CHAT, CLEAR_COMMENTS } from './eventConstants';
+import { ADD_EVENT, UPDATE_EVENT, DELETE_EVENT, FETCH_EVENTS, LISTEN_TO_EVENT_CHAT, CLEAR_COMMENTS, LISTEN_TO_SELECTED_EVENT, CLEAR_EVENTS } from './eventConstants';
 import {sampleData} from "../../app/api/sampleData";
-
-
-
 
 const initialState = {
     events: [],
-    comments: []
+    comments: [],
+    moreEvents: true,
+    selectedEvent: null
 }
 
 const eventReducer = (state = initialState , action)=>{
@@ -33,7 +32,8 @@ const eventReducer = (state = initialState , action)=>{
         case FETCH_EVENTS: 
          return {
              ...state,
-             events: [...action.payload]
+             events: [...state.events, ...action.payload.events],
+             moreEvents: action.payload.moreEvents
          }
 
          case LISTEN_TO_EVENT_CHAT:
@@ -42,13 +42,24 @@ const eventReducer = (state = initialState , action)=>{
                  comments: action.payload
              }
 
+        case LISTEN_TO_SELECTED_EVENT:
+            return {
+                ...state,
+                selectedEvent: action.payload
+            }
+
         case CLEAR_COMMENTS:
             return {
                 ...state,
                 comments: []
             }
 
-
+        case CLEAR_EVENTS:
+            return {
+                ...state,
+                events : [],
+                moreEvents: true
+            }
         default: 
            return state
     }
