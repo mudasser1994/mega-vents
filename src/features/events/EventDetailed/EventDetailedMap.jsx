@@ -18,7 +18,7 @@ function Marker(){
                width: '100%'
            }}>
              <GoogleMapReact
-                bootstrapURLKeys={{ key: "AIzaSyAwaOV2_PoJCLS8lW9wfjSm9ojqk4hIOZM" }}
+                bootstrapURLKeys={{ key: process.env.REACT_APP_MAP_KEY }}
                 center={latLng}
                 zoom={zoom}>
                   <Marker lat={latLng.lat} lng={latLng.lng} />

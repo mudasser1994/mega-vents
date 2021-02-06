@@ -15,6 +15,7 @@ import AccountPage from '../../features/auth/AccountPage';
 import { useSelector } from 'react-redux';
 import LoadingComponent from './LoadingComponent';
 import ProfilePage from '../../features/profiles/ProfilePage';
+import PrivateRoute from './PrivateRoute';
 
 
 const App = ()=>{
@@ -38,9 +39,9 @@ const App = ()=>{
         <Switch>
             <Route exact path="/events"  component={EventDashboard} />
             <Route path="/events/:id"  component={EventDetailedPage} />
-            <Route key={key} path={["/createEvent" , "/manage/:id"]} exact  component={EventForm} />
-            <Route path="/account" component={AccountPage}  />
-            <Route path="/profile/:id" component={ProfilePage}  />
+            <PrivateRoute key={key} path={["/createEvent" , "/manage/:id"]} exact  component={EventForm} />
+            <PrivateRoute path="/account" component={AccountPage}  />
+            <PrivateRoute path="/profile/:id" component={ProfilePage}  />
             <Route path="/error" component={ErrorComponent}  />
         </Switch>
       </Container>

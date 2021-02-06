@@ -15,6 +15,7 @@ const EventDetailedChat = ({ eventId }) => {
         commentId: null
     });
     const { comments } = useSelector(state => state.event);
+    const {authenticated} = useSelector(state=>state.auth);
 
     function handleCloseReplyForm() {
         setShowReplyForm({
@@ -42,9 +43,9 @@ const EventDetailedChat = ({ eventId }) => {
                 color="teal"
                 style={{ border: 'none' }}
             >
-                <Header>Chat about this event</Header>
+                <Header>{authenticated ? 'Chat about this event' : 'Signin to view and comment'}</Header>
             </Segment>
-
+            {authenticated && 
             <Segment attached>
                 <EventDetailedChatForm parentId={0} eventId={eventId} closeForm={handleCloseReplyForm} />
                 <Comment.Group>
@@ -107,7 +108,7 @@ const EventDetailedChat = ({ eventId }) => {
                         ))
                     }
                 </Comment.Group>
-            </Segment>
+            </Segment> }
         </>
     )
 }
