@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Grid } from 'semantic-ui-react';
 import {useParams , Redirect} from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -16,12 +16,11 @@ import { useDispatch } from 'react-redux';
     
     const dispatch = useDispatch(); 
     const params= useParams();
-
     const event =  useSelector(state => state.event.selectedEvent);
     const { loading , error } = useSelector(state=>state.async)
     const {currentUser} = useSelector(state=>state.auth);
     const isHost = event?.hostUid === currentUser?.uid;
-    const isGoing = event?.attendees?.some(a=>a.id==currentUser?.uid);
+    const isGoing = event?.attendees?.some(a=>a.id === currentUser?.uid);
 
     useFirestoreDoc({
         query: ()=>listenToEventFromFirestore(params.id),

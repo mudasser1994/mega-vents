@@ -31,10 +31,10 @@ export async function registerUserInFirebase(creds){
 
 export async function socialLogin(selectedProvider){
     let provider;
-    if(selectedProvider=="facebook"){
+    if(selectedProvider === "facebook"){
         provider = new firebase.auth.FacebookAuthProvider();
     }
-    else if(selectedProvider=="google"){
+    else if(selectedProvider === "google"){
         provider = new firebase.auth.GoogleAuthProvider();
     }
 

@@ -4,7 +4,7 @@ import {  Grid, Loader } from "semantic-ui-react";
 import EventList from "./eventList/EventList";
 import EventFilters from "./eventFilters/EventFilters";
 import EventListItemPlaceholder from "./eventListItemPlaceholder/EventListItemPlaceholder";
-import { clearEvents, fetchEvents } from '../eventActions';
+import { fetchEvents } from '../eventActions';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import EventFeed from './eventFeed/eventFeed';
@@ -35,7 +35,7 @@ const EventDashboard = ()=>{
         return ()=>dispatch({
             type: RETAIN_STATE
         })
-    } , [filter , startDate , retainState])
+    } , [filter , startDate , retainState , dispatch])
 
     function handleFetchNextEvents(){
         dispatch(fetchEvents(filter , startDate , limit , lastVisible));

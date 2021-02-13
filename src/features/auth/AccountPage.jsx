@@ -13,7 +13,7 @@ export default function AccountPage(){
         <Segment>
             <Header dividing size="large" content="Account" />
             {
-                currentUser.providerId=="password" &&  <>
+                currentUser.providerId === "password" &&  <>
                 <Header color="teal" sub content="Change Password" />
                 <p>Use this form to change your password</p>
                 <Formik initialValues={{newPassword1: "" , newPassword2: ""}}
@@ -52,7 +52,7 @@ export default function AccountPage(){
             }
 
             {
-                currentUser.providerId=="facebook.com" &&  <>
+                currentUser.providerId === "facebook.com" &&  <>
                 <Header color="teal" sub content="Facebook Account" />
                 <p>Please visit Facebook to update your account</p>
                 <Button icon="facebook" color="facebook" as={Link} to="https://facebook.com"
@@ -60,7 +60,7 @@ export default function AccountPage(){
               </>
             }
             {
-                currentUser.providerId=="google.com" &&  <>
+                currentUser.providerId === "google.com" &&  <>
                 <Header color="teal" sub content="Google Account" />
                 <p>Please visit Google to update your account</p>
                 <Button icon="google" color="google plus" as={Link} to="https://google.com"

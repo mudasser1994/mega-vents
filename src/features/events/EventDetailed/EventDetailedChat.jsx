@@ -2,7 +2,7 @@ import { formatDistance } from 'date-fns';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Segment, Header, Comment, Form, Button } from 'semantic-ui-react';
+import { Segment, Header, Comment } from 'semantic-ui-react';
 import { createDataTree } from '../../../app/common/util/util';
 import { firebaseObjectToArray, getEventChatRef } from '../../../app/firestore/firebaseService';
 import { clearEventComments, listenToEventChats } from '../eventActions';

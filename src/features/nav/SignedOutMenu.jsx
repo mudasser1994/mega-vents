@@ -4,9 +4,8 @@ import React from 'react'
 import { Menu, Button } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
 import {openModal} from "../../app/common/modals/modalReducer";
-import LoginForm from '../auth/LoginForm';
 
-const SignedOutMenu = ({setAuthenticated}) => {
+const SignedOutMenu = () => {
     const dispatch = useDispatch();
    return (
        <Menu.Item position="right">

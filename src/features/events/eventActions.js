@@ -1,6 +1,5 @@
 import { asyncActionStart, asyncActionFinish, asyncActionError } from './../../app/async/asyncReducer';
-import { ADD_EVENT, UPDATE_EVENT, DELETE_EVENT , FETCH_EVENTS, LISTEN_TO_EVENT_CHAT, CLEAR_COMMENTS, LISTEN_TO_SELECTED_EVENT, CLEAR_EVENTS, SET_FILTER, SET_START_DATE } from "./eventConstants";
-import { fetchSampleData } from "../../app/api/mockApi";
+import { ADD_EVENT, UPDATE_EVENT, DELETE_EVENT , FETCH_EVENTS, LISTEN_TO_EVENT_CHAT, CLEAR_COMMENTS, LISTEN_TO_SELECTED_EVENT, CLEAR_EVENTS, SET_FILTER, SET_START_DATE, CLEAR_SELECTED_EVENT } from "./eventConstants";
 import { dataFromSnapshot, fetchEventsFromFirestore } from '../../app/firestore/firestoreService';
 
 export const fetchEvents = (filter , startDate , limit , lastDocSnapshot)=>{
@@ -44,6 +43,12 @@ export const setStartDate = (date)=>{
 
 export const listenToSelectedEvent = (event)=>{
     return {type: LISTEN_TO_SELECTED_EVENT , payload: event};
+}
+
+export const clearSelectedEvent = ()=>{
+    return {
+        type: CLEAR_SELECTED_EVENT
+    }
 }
 
 

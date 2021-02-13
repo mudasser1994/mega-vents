@@ -33,8 +33,8 @@ export default function ProfilePage({match}){
     return (
         <Grid>
               <Grid.Column width={16}>
-                  <ProfileHeader isCurrentUser={currentUser.uid==profile.id} profile={profile} />
-                  <ProfileContent  isCurrentUser={currentUser.uid==profile.id} profile={profile} />
+                  <ProfileHeader isCurrentUser={currentUser.uid === profile.id} profile={profile} />
+                  <ProfileContent  isCurrentUser={currentUser.uid === profile.id} profile={profile} />
               </Grid.Column>
         </Grid>
     )

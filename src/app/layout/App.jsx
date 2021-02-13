@@ -8,7 +8,6 @@ import HomePage from '../../features/Home/HomePage';
 import EventDetailedPage from '../../features/events/EventDetailed/EventDetailedPage';
 import EventForm from '../../features/events/eventForm/eventForm';
 import ModalManager from '../common/modals/modalManager';
-import LoginForm from '../../features/auth/LoginForm';
 import { ToastContainer } from 'react-toastify';
 import ErrorComponent from '../common/errors/ErrorComponent';
 import AccountPage from '../../features/auth/AccountPage';

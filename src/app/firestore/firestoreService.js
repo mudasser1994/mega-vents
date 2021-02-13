@@ -79,7 +79,7 @@ export function deleteEventInFirestore(eventId) {
 
 export function cancelEventToggle(event) {
     return db.collection('events').doc(event.id).update({
-        isCancelled: event.isCancelled == undefined ? true : !event.isCancelled
+        isCancelled: event.isCancelled === undefined ? true : !event.isCancelled
     })
 }
 

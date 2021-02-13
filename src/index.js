@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.min.css";
 import "react-calendar/dist/Calendar.css";
 
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from "react-router-dom";
 import App from './app/layout/App';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from "react-redux";

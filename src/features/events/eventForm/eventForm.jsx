@@ -1,9 +1,9 @@
 /* global google */
-import React, {  useState } from "react";
+import React, {  useEffect, useState } from "react";
 import {Redirect} from "react-router-dom";
 import { Segment, Header, Button , Confirm } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
-import {  listenToSelectedEvent} from "../eventActions";
+import {  clearSelectedEvent, listenToSelectedEvent} from "../eventActions";
 import { Formik , Form  } from "formik";
 import MyTextInput from "../../../app/common/form/MyTextInput";
 import * as Yup from "yup";
@@ -18,13 +18,19 @@ import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { toast } from "react-toastify";
 
 
-const EventForm = ({match , history})=>{
+const EventForm = ({match , history , location})=>{
 
     const dispatch = useDispatch();
     const [loadingCancel , setLoadingCancel ] = useState(false);
     const [confirmOpen , setConfirmOpen ] = useState(false);
     const { selectedEvent } = useSelector(state => state.event);
     const { loading , error } = useSelector(state=>state.async);
+
+    useEffect(()=>{
+        if(location.pathname !== "/createEvent") return;
+        dispatch(clearSelectedEvent());
+    } , [dispatch , location.pathname])
+
     const initialValues = selectedEvent ? selectedEvent : {
         title:'',
         category:'',
@@ -53,11 +59,8 @@ const EventForm = ({match , history})=>{
         date: Yup.string().required()
     })
 
-
-
-
     useFirestoreDoc({
-        shouldExecute: !!match.params.id,
+        shouldExecute: match.params.id !== selectedEvent?.id && location.pathname !== "/createEvent",
         query: ()=>listenToEventFromFirestore(match.params.id),
         data: event=> dispatch(listenToSelectedEvent(event)),
         deps: [match.params.id , dispatch]
@@ -136,7 +139,8 @@ const EventForm = ({match , history})=>{
                                  timeFormat="HH:mm"
                                  showTimeSelect
                                  timeCaption="time"
-                                 dateFormat="MMMM d, yyyy h:mm a" />
+                                 dateFormat="MMMM d, yyyy h:mm a"
+                                 autocomplete="off" />
                     {/* <FormField>
                         <Field  name="title" placeholder="Event Title"/>
                         <ErrorMessage name='title' render={(error)=><Label basic color="red" content={error} /> } /> 

@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -80,7 +79,7 @@ export default function PhotosTab({ profile, isCurrentUser }) {
                                         <Image src={photo.url} />
                                         <Button.Group fluid widths={2}>
                                             <Button 
-                                            loading={updating.isUpdating && updating.target==photo.id} 
+                                            loading={updating.isUpdating && updating.target === photo.id} 
                                             name={photo.id} 
                                             onClick={(e)=>handleSetMainPhoto(photo , e.target.name)} 
                                             basic 
@@ -89,7 +88,7 @@ export default function PhotosTab({ profile, isCurrentUser }) {
                                             disabled={profile.photoURL === photo.url}  />
 
                                             <Button 
-                                             loading={deleting.isDeleting && deleting.target==photo.id}
+                                             loading={deleting.isDeleting && deleting.target === photo.id}
                                              name={photo.id} 
                                              onClick={(e)=>handleDeletePhoto(photo , e.target.name)}
                                              disabled={profile.photoURL === photo.url} 
