@@ -1,11 +1,15 @@
-import { ADD_EVENT, UPDATE_EVENT, DELETE_EVENT, FETCH_EVENTS, LISTEN_TO_EVENT_CHAT, CLEAR_COMMENTS, LISTEN_TO_SELECTED_EVENT, CLEAR_EVENTS } from './eventConstants';
+import { ADD_EVENT, UPDATE_EVENT, DELETE_EVENT, FETCH_EVENTS, LISTEN_TO_EVENT_CHAT, CLEAR_COMMENTS, LISTEN_TO_SELECTED_EVENT, CLEAR_EVENTS, SET_START_DATE, RETAIN_STATE, SET_FILTER } from './eventConstants';
 import {sampleData} from "../../app/api/sampleData";
 
 const initialState = {
     events: [],
     comments: [],
     moreEvents: true,
-    selectedEvent: null
+    selectedEvent: null,
+    lastVisible: null,
+    filter: 'all',
+    startDate: new Date(new Date().setHours(0,0,0,0)),
+    retainState: false
 }
 
 const eventReducer = (state = initialState , action)=>{
@@ -33,9 +37,30 @@ const eventReducer = (state = initialState , action)=>{
          return {
              ...state,
              events: [...state.events, ...action.payload.events],
-             moreEvents: action.payload.moreEvents
+             moreEvents: action.payload.moreEvents,
+             lastVisible: action.payload.lastVisible
          }
 
+         case SET_FILTER: 
+         return {
+             ...state,
+             retainState: false,
+             filter: action.payload,
+             moreEvents: true,
+
+         }
+         case SET_START_DATE: 
+         return {
+             ...state,
+             retainState: false,
+             startDate: action.payload,
+             moreEvents: true
+         }
+         case RETAIN_STATE: 
+         return {
+             ...state,
+             retainState: true
+         }
          case LISTEN_TO_EVENT_CHAT:
              return {
                  ...state,
@@ -58,7 +83,8 @@ const eventReducer = (state = initialState , action)=>{
             return {
                 ...state,
                 events : [],
-                moreEvents: true
+                moreEvents: true,
+                lastVisible: null
             }
         default: 
            return state

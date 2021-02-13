@@ -8,19 +8,15 @@ import { clearEvents, fetchEvents } from '../eventActions';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import EventFeed from './eventFeed/eventFeed';
+import { RETAIN_STATE } from '../eventConstants';
 
 const EventDashboard = ()=>{
     // const [events , setEvents] = useState(sampleData);
     const limit = 2;
-    const {events , moreEvents} = useSelector(state=>state.event);
+    const {events , moreEvents , lastVisible, filter , startDate, retainState} = useSelector(state=>state.event);
     const {loading} = useSelector(state=>state.async);
     const { authenticated } = useSelector(state=>state.auth);
     const [loadingInitial , setLoadingInitial] = useState(null);
-    const [predicate , setPredicate] = useState(new Map([
-        ['startDate' , new Date(new Date().setHours(0,0,0,0))],
-        ['filter' , 'all']
-    ]))
-    const [lastDocSnapshot , setLastDocSnapshot] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -31,25 +27,20 @@ const EventDashboard = ()=>{
     // })
 
     useEffect(()=>{
+        if(retainState) return;
         setLoadingInitial(true);
-        dispatch(fetchEvents(predicate , limit)).then((lastVisible)=>{
-            setLastDocSnapshot(lastVisible);
+        dispatch(fetchEvents(filter , startDate , limit)).then(()=>{
             setLoadingInitial(false);
         });
-        return ()=>dispatch(clearEvents()) 
-    } , [predicate , dispatch])
+        return ()=>dispatch({
+            type: RETAIN_STATE
+        })
+    } , [filter , startDate , retainState])
 
     function handleFetchNextEvents(){
-        dispatch(fetchEvents(predicate , limit , lastDocSnapshot)).then((lastVisible)=>{
-            setLastDocSnapshot(lastVisible);
-        });
+        dispatch(fetchEvents(filter , startDate , limit , lastVisible));
     }
 
-    function handleSetPredicate(key , value){
-        dispatch(clearEvents());
-        setLastDocSnapshot(null);
-        setPredicate(new Map(predicate.set(key , value)));
-    }
 
     // useEffect(()=>{
     //     dispatch(asyncActionStart());
@@ -83,7 +74,7 @@ const EventDashboard = ()=>{
             </Grid.Column>
             <Grid.Column width={6}>
                 {authenticated && <EventFeed /> }
-              <EventFilters predicate={predicate} setPredicate={handleSetPredicate} loading={loading} />
+              <EventFilters loading={loading} />
             </Grid.Column>
             <Grid.Column width={10}>
                <Loader active={loading} />
